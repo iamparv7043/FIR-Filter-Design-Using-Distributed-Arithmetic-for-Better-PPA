@@ -85,7 +85,7 @@ This implementation completely eliminates hardware multipliers.
 
 The waveform below shows the filtered output generated after processing all input bits using the Distributed Arithmetic architecture.
 
-![Simulation](images/Simulation.png)
+![Simulation](images/Sim.png)
 ---
 
 # 📉 Frequency Response

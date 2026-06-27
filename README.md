@@ -124,9 +124,6 @@ The design was successfully synthesized using **Xilinx Vivado**.
 
 **Power Comparison:** The proposed DA architecture reduced total on-chip power from **40.13 W** to **7.47 W**, corresponding to an **81% reduction in power consumption**.
 
-### Synthesis Report
-
-![Synthesis Report](images/Synthesis_rpt.png)
 
 ---
 

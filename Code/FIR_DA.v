@@ -11,14 +11,13 @@ module fir_da (
     reg [3:0] count;
     reg load;
 
-    // wires to connect to the lut modules
     wire [12:0] out_b1_1, out_b2_1, out_b2_2, out_b1_2;
     
     wire [3:0] in_b1_1 = {r1[count], r2[count], r3[count], r4[count]};
     wire [3:0] in_b2_1 = {r5[count], r6[count], r7[count], r8[count]};
     wire [3:0] in_b2_2 = {r12[count], r11[count], r10[count], r9[count]};
     wire [3:0] in_b1_2 = {r16[count], r15[count], r14[count], r13[count]};
-
+    
     lut_block1 b1_inst1 (.addr(in_b1_1), .val(out_b1_1));
     lut_block2 b2_inst1 (.addr(in_b2_1), .val(out_b2_1));
     lut_block2 b2_inst2 (.addr(in_b2_2), .val(out_b2_2));
@@ -53,20 +52,22 @@ module fir_da (
                 load = 0; 
                 count = 0;
             end else begin
+                // for reading data from rom/lut's
                 temp = out_b1_1 + out_b2_1 + out_b2_2 + out_b1_2;
 
+                // For checking MSB if it's 1 then it'll subtract(for -ve numbs)
                 if ((count == 4'b1001) &&
                     (r1[count]  || r2[count]  || r3[count]  || r4[count]  ||
                      r5[count]  || r6[count]  || r7[count]  || r8[count]  ||
                      r12[count] || r11[count] || r10[count] || r9[count]  ||
                      r16[count] || r15[count] || r14[count] || r13[count])) 
                 begin
-                    calc = calc + (~(temp << count) + 1); 
+                    calc = calc + (~(temp << count) + 1);
                 end else begin
                     calc = calc + (temp << count);
                 end
 
-                if (calc[12] == 1'b1)
+                if (calc[12] == 1'b1)        //sign extention
                     calc[21:13] = 9'b111111111;
                 else
                     calc[21:13] = 9'b000000000;
@@ -83,6 +84,7 @@ module fir_da (
         end
     end
 endmodule
+
 
 module lut_block1 (
     input  [3:0] addr,
